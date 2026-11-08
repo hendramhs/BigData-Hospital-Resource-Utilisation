@@ -1,0 +1,60 @@
+{
+  "rows_before": 30900,
+  "rows_after": 30000,
+  "issues": {
+    "duplikat admission_id": {
+      "before": 900,
+      "after": 0,
+      "keputusan": "dropDuplicates(admission_id)"
+    },
+    "discharge_time kosong": {
+      "before": 920,
+      "after": 0,
+      "keputusan": "diisi admit + median LOS bangsal (flag discharge_imputed)"
+    },
+    "discharge < admit": {
+      "before": 299,
+      "after": 0,
+      "keputusan": "diperlakukan seperti kosong: diisi median LOS bangsal (flag)"
+    },
+    "umur tidak valid (<0 / >120)": {
+      "before": 155,
+      "after": 0,
+      "keputusan": "diubah NULL (tidak dipakai di BOR/LOS)"
+    },
+    "department kosong/format tidak baku": {
+      "before": 1830,
+      "after": 0,
+      "keputusan": "department diambil dari wards.csv via ward_id"
+    }
+  },
+  "discharge_imputed_rows": 1191,
+  "bor_total_before_pct": 179.3,
+  "bor_total_after_pct": 181.1,
+  "bor_ward_before_vs_after": {
+    "W_CARD": {
+      "before": 169.8,
+      "after": 171.6
+    },
+    "W_EMERG": {
+      "before": 118.4,
+      "after": 119.9
+    },
+    "W_ICU": {
+      "before": 264.6,
+      "after": 266.3
+    },
+    "W_INTMED": {
+      "before": 218.1,
+      "after": 219.9
+    },
+    "W_PED": {
+      "before": 142.7,
+      "after": 144.5
+    },
+    "W_SURG": {
+      "before": 156.7,
+      "after": 158.6
+    }
+  }
+}

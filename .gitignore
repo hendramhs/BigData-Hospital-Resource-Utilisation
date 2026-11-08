@@ -1,0 +1,21 @@
+# Lingkungan Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Data (dihasilkan dari seed 42, atau cadangan lokal)
+data/
+snapshots/
+
+# Artefak Spark
+spark-warehouse/
+metastore_db/
+derby.log
+*.crc
+
+# Editor dan OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

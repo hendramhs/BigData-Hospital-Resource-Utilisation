@@ -1,0 +1,8 @@
+ward_id,ward_name,total_beds,target_bor_pct,bed_days_used,bed_days_available,bor_pct
+W_CARD,Cardiology Ward,35,80.0,21919.900000000005,12775,171.6
+W_EMERG,Emergency Ward,30,75.0,13129.100000000002,10950,119.9
+W_ICU,Intensive Care Unit,25,80.0,24300.9,9125,266.3
+W_INTMED,Internal Medicine Ward,65,85.0,52180.9,23725,219.9
+W_PED,Pediatrics Ward,40,80.0,21091.9,14600,144.5
+W_SURG,Surgery Ward,45,85.0,26043.4,16425,158.6
+TOTAL,Seluruh RS,240,,158666.1,87600,181.1
