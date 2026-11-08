@@ -7,6 +7,7 @@ Satu baris merepresentasikan satu peristiwa admisi pasien rawat inap ke bangsal 
 - `patient_id`: Identitas unik pasien (relasi 1 pasien ke banyak admisi).
 - `ward_id`: Kode bangsal rumah sakit (W_EMERG, W_INTMED, W_ICU, W_CARD, W_PED, W_SURG).
 - `department`: Nama departemen / spesialisasi layanan rawat inap.
+- `diagnosis`: Nama diagnosis klinis penyakit (contoh: Gagal Napas Akut, Infark Miokard, Diabetes Melitus).
 - `admission_type`: Jenis admisi (Emergency, Elective, Urgent).
 - `age`: Umur pasien saat masuk rawat inap.
 - `gender`: Jenis kelamin (M / F).

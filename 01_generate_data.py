@@ -117,6 +117,16 @@ WARDS_REF = pd.DataFrame([
 p_ward = np.array([WARDS_CONFIG[w]["p"] for w in ward_list])
 p_ward /= p_ward.sum()
 
+# Master Diagnosis Klinis Realistis per Bangsal (Langsung Nama Penyakit)
+DIAGNOSES_CONFIG = {
+    "W_EMERG": [("Gastroenteritis Akut", 0.35), ("Pneumonia Akut", 0.35), ("Apendisitis Akut", 0.30)],
+    "W_INTMED": [("Diabetes Melitus Tipe 2", 0.45), ("Hipertensi Primer", 0.35), ("Pneumonia Bakterial", 0.20)],
+    "W_ICU": [("Gagal Napas Akut", 0.40), ("Sepsis Berat", 0.35), ("Infark Miokard Akut", 0.25)],
+    "W_CARD": [("Infark Miokard Akut", 0.45), ("Gagal Jantung Kongestif", 0.35), ("Krisis Hipertensi", 0.20)],
+    "W_PED": [("Bronkopneumonia Anak", 0.55), ("Gastroenteritis Dehidrasi Sedang", 0.45)],
+    "W_SURG": [("Apendisitis Akut Terperforasi", 0.50), ("Hernia Inguinalis", 0.30), ("Fraktur Ekstremitas", 0.20)],
+}
+
 # ---------- 1. DATA ADMISI (CSV) ----------
 cand = 45_000
 admit_all = pd.to_datetime("2025-01-01") + pd.to_timedelta(rng.integers(0, 365 * 86400, cand), unit="s")
@@ -130,6 +140,7 @@ selected_wards = rng.choice(ward_list, n, p=p_ward)
 age = np.zeros(n, dtype=int)
 los_h = np.zeros(n, dtype=int)
 dept_names = np.empty(n, dtype=object)
+dx_names = np.empty(n, dtype=object)
 adm_type = rng.choice(["Emergency", "Elective", "Urgent"], n, p=[0.50, 0.30, 0.20])
 
 for wid in ward_list:
@@ -138,6 +149,15 @@ for wid in ward_list:
     dept_names[m] = cfg["department"]
     lo_age, hi_age = cfg["age"]
     age[m] = rng.integers(lo_age, hi_age + 1, m.sum())
+    
+    # Diagnosis medis riil sesuai bangsal
+    dx_opts = DIAGNOSES_CONFIG[wid]
+    names = [opt[0] for opt in dx_opts]
+    probs = np.array([opt[1] for opt in dx_opts], dtype=float)
+    probs /= probs.sum()
+    
+    chosen_indices = rng.choice(len(dx_opts), m.sum(), p=probs)
+    dx_names[m] = np.array(names)[chosen_indices]
     
     # Lama rawat inap (Length of Stay) dalam jam
     lo_los, hi_los = cfg["los"]
@@ -150,20 +170,19 @@ for wid in ward_list:
 gender = rng.choice(["F", "M"], n)
 fmt = "%Y-%m-%d %H:%M:%S"
 
+# ---------- Simpan DataFrame Admisi Lengkap (Tanpa dx_code) ----------
 adm = pd.DataFrame({
     "admission_id": [f"ADM{i:06d}" for i in range(n)],
     "patient_id": [f"P{p:05d}" for p in rng.integers(0, N_PAT, n)],
     "ward_id": selected_wards,
     "department": dept_names,
+    "diagnosis": dx_names,
     "admission_type": adm_type,
     "age": age,
     "gender": gender,
     "admit_time": admit.strftime(fmt),
     "discharge_time": (admit + pd.to_timedelta(los_h, unit="h")).strftime(fmt),
 })
-# Alias kompatibilitas
-adm["encounter_id"] = adm["admission_id"]
-adm["dx_code"] = adm["ward_id"]
 
 # ---------- 2. DATA UTILISASI TEMPAT TIDUR (JSON BERSARANG) ----------
 # Setiap admisi memiliki catatan alokasi & monitoring utilisasi bed (1-3 catatan per admisi)
@@ -192,11 +211,9 @@ for wid in ward_list:
     
     df_part = pd.DataFrame({
         "admission_id": adm.admission_id.values[idx_repeat],
-        "encounter_id": adm.admission_id.values[idx_repeat],
         "ward_id": wid,
         "bed_id": bed_ids,
         "record_time": pd.to_datetime(ts).strftime(fmt),
-        "obs_time": pd.to_datetime(ts).strftime(fmt),
         "source": rng.choice(["bed_management_system", "iot_smart_bed"], n_recs, p=[0.7, 0.3]),
         "bed_type": cfg["bed_type"],
         "daily_rate": rate_val,
@@ -207,7 +224,6 @@ for wid in ward_list:
 
 bed_recs = pd.concat(parts, ignore_index=True).sample(frac=1, random_state=SEED).reset_index(drop=True)
 bed_recs.insert(0, "record_id", [f"REC{i:07d}" for i in range(len(bed_recs))])
-bed_recs["obs_id"] = bed_recs["record_id"]
 
 # ---------- 3. INJEKSI MASALAH KUALITAS DATA (VERACITY) ----------
 issues = {}
@@ -258,54 +274,34 @@ issues["bed_records: tarif negatif tidak logis"] = len(i)
 # Isu 9: Orphan admission_id (ID admisi di data log bed tidak terdaftar di data admisi)
 i = pick(bed_recs, 0.003, 13)
 bed_recs.loc[i, "admission_id"] = [f"ADM9{x:05d}" for x in rng.integers(0, 99999, len(i))]
-bed_recs.loc[i, "encounter_id"] = bed_recs.loc[i, "admission_id"]
 issues["bed_records: admission_id yatim (orphan)"] = len(i)
 
-# ---------- 4. PENYIMPANAN FILE SUMBER ----------
-# Simpan CSV admisi (nama utama dan alias)
+# ---------- 4. PENYIMPANAN FILE SUMBER MURNI (HANYA 3 DATASET UTAMA) ----------
+# 1. Simpan CSV Admisi Pasien (Lengkap dengan diagnosa klinis & bangsal)
 adm.to_csv(f"{RAW}/admissions_full.csv", index=False)
-adm.to_csv(f"{RAW}/encounters_full.csv", index=False)
 
-# Simpan CSV referensi bangsal
+# 2. Simpan CSV Master Kapasitas Bangsal
 WARDS_REF.to_csv(f"{RAW}/wards.csv", index=False)
-# Buat tabel diagnoses.csv kompatibel (memetakan ward_id ke deskripsi)
-dx_compat = pd.DataFrame({
-    "dx_code": WARDS_REF["ward_id"],
-    "dx_description": WARDS_REF["ward_name"] + " (" + WARDS_REF["department"] + ")",
-})
-dx_compat.to_csv(f"{RAW}/diagnoses.csv", index=False)
 
-# Simpan JSON bersarang untuk data utilisasi tempat tidur
-def write_nested_json(filepath):
-    with open(filepath, "w", encoding="utf-8") as f:
-        for r in bed_recs.itertuples(index=False):
-            rate_val = None if pd.isna(r.daily_rate) else float(r.daily_rate)
-            obj = {
-                "record_id": r.record_id,
-                "admission_id": r.admission_id,
-                "encounter_id": r.admission_id,
-                "ward_id": r.ward_id,
-                "bed_id": r.bed_id,
-                "record_time": r.record_time,
-                "obs_time": r.record_time,
-                "source": r.source,
-                "bed_specs": {
-                    "bed_type": r.bed_type,
-                    "daily_rate": rate_val,
-                    "occupancy_status": r.occupancy_status,
-                    "has_ventilator": bool(r.has_ventilator),
-                },
-                # Format kompatibel dengan observasi
-                "observation": {
-                    "type": r.bed_type,
-                    "value": rate_val,
-                    "unit": "IDR",
-                }
+# 3. Simpan JSON Bersarang Log Utilisasi Tempat Tidur
+with open(f"{RAW}/bed_capacity.json", "w", encoding="utf-8") as f:
+    for r in bed_recs.itertuples(index=False):
+        rate_val = None if pd.isna(r.daily_rate) else float(r.daily_rate)
+        obj = {
+            "record_id": r.record_id,
+            "admission_id": r.admission_id,
+            "ward_id": r.ward_id,
+            "bed_id": r.bed_id,
+            "record_time": r.record_time,
+            "source": r.source,
+            "bed_specs": {
+                "bed_type": r.bed_type,
+                "daily_rate": rate_val,
+                "occupancy_status": r.occupancy_status,
+                "has_ventilator": bool(r.has_ventilator),
             }
-            f.write(json.dumps(obj, separators=(",", ":")) + "\n")
-
-write_nested_json(f"{RAW}/bed_capacity.json")
-write_nested_json(f"{RAW}/observations.json")
+        }
+        f.write(json.dumps(obj, separators=(",", ":")) + "\n")
 
 # Dokumentasi Kamus Data
 with open(f"{RAW}/DATA_DICTIONARY.md", "w", encoding="utf-8") as f:
@@ -318,6 +314,7 @@ Satu baris merepresentasikan satu peristiwa admisi pasien rawat inap ke bangsal 
 - `patient_id`: Identitas unik pasien (relasi 1 pasien ke banyak admisi).
 - `ward_id`: Kode bangsal rumah sakit (W_EMERG, W_INTMED, W_ICU, W_CARD, W_PED, W_SURG).
 - `department`: Nama departemen / spesialisasi layanan rawat inap.
+- `diagnosis`: Nama diagnosis klinis penyakit (contoh: Gagal Napas Akut, Infark Miokard, Diabetes Melitus).
 - `admission_type`: Jenis admisi (Emergency, Elective, Urgent).
 - `age`: Umur pasien saat masuk rawat inap.
 - `gender`: Jenis kelamin (M / F).
