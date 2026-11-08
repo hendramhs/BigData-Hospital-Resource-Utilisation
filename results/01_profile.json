@@ -1,0 +1,34 @@
+{
+  "case_study": "Hospital Resource Utilisation",
+  "case_study_no": 2,
+  "central_question": "Bagaimana pola pemanfaatan tempat tidur (Bed Occupancy Rate / BOR) dan lama rawat inap (Length of Stay / LOS) di berbagai bangsal sepanjang 2025, dan apa implikasinya untuk perencanaan kapasitas dan alokasi tempat tidur rumah sakit?",
+  "admission_rows": 30900,
+  "unique_admissions": 30000,
+  "unique_patients": 8685,
+  "bed_record_rows": 45086,
+  "ward_rows": 6,
+  "total_hospital_beds": 240,
+  "records_per_admission": 1.5,
+  "size_admissions_mb": 3.35,
+  "size_bed_capacity_mb": 18.58,
+  "period": "2025-01-01 s/d 2025-12-31",
+  "wards": [
+    "Emergency Ward",
+    "Internal Medicine Ward",
+    "Intensive Care Unit",
+    "Cardiology Ward",
+    "Pediatrics Ward",
+    "Surgery Ward"
+  ],
+  "injected_issues": {
+    "admisi: department kosong": 600,
+    "admisi: format department tidak konsisten": 1176,
+    "admisi: discharge_time kosong": 900,
+    "admisi: discharge lebih awal dari admit": 291,
+    "admisi: umur tidak valid": 150,
+    "admisi: baris duplikat": 900,
+    "bed_records: biaya harian kosong": 1353,
+    "bed_records: tarif negatif tidak logis": 219,
+    "bed_records: admission_id yatim (orphan)": 135
+  }
+}

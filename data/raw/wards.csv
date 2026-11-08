@@ -1,0 +1,7 @@
+ward_id,ward_name,department,total_beds,bed_type,daily_rate,target_bor_pct
+W_EMERG,Emergency Ward,Emergency,30,Observation Bed,500000,75.0
+W_INTMED,Internal Medicine Ward,Internal Medicine,65,Standard Ward Bed,750000,85.0
+W_ICU,Intensive Care Unit,Critical Care,25,ICU Bed,2500000,80.0
+W_CARD,Cardiology Ward,Cardiology,35,Cardiac Care Bed,1200000,80.0
+W_PED,Pediatrics Ward,Pediatrics,40,Pediatric Bed,700000,80.0
+W_SURG,Surgery Ward,Surgery,45,Surgical Bed,1000000,85.0
