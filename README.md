@@ -74,63 +74,83 @@ Sistem ini dirancang dengan menerapkan prinsip **5Vs of Big Data**:
 
 ---
 
-## 🏛️ System Pipeline Workflow
+## 🏛️ System Pipeline Workflow & Architecture Diagram
 
-```
-[Raw Data Sources]
-  ├── admissions_full.csv  ── (Patient Admissions: CSV)
-  ├── bed_capacity.json    ── (Bed Specifications & Logs: Nested JSON)
-  └── wards.csv            ── (Ward Capacity Reference: CSV)
-               │
-               ▼
-[Ingestion Layer]
-  └── Periodic Micro-batch Simulator (PySpark Batch Streaming + Ingest Timestamps)
-               │
-               ▼
-[Storage Layer - Raw Lake]
-  └── Apache Parquet Storage (data/lake/)
-               │
-               ▼
-[Data Cleaning & Integration Layer]
-  ├── Automated Veracity Rules (Dedup, Range Checks, Timestamp Audits)
-  └── Schema Normalization & Entity Join (CSV + Flattened JSON)
-               │
-               ▼
-[Processing & Analytics Engine]
-  ├── PySpark DataFrame API & Spark SQL Optimization
-  └── Execution Plan Benchmarking (Catalyst Optimizer & Shuffle Evaluation)
-               │
-               ▼
-[Output & Healthcare Value Delivery]
-  ├── Executive Operational Dashboard (PNG / Results)
-  ├── Performance Benchmark Logs (CSV / JSON)
-  └── Automated System Architecture & Audit Reports
-```
+Berikut adalah arsitektur sistem end-to-end yang mengintegrasikan seluruh alur data dari sumber heterogen hingga penyajian informasi bernilai klinis:
+
+![Arsitektur Sistem Big Data - Hospital Resource Utilisation](architectureanddataflow/Arsitektur_BigData_Hospital_Utilisation.drawio.png)
+
+> 💡 **File Sumber Diagram:** Diagram arsitektur di atas tersimpan dalam folder [`architectureanddataflow/`](architectureanddataflow/) dalam dua format:
+> * **File gambar resolusi tinggi:** [`architectureanddataflow/Arsitektur_BigData_Hospital_Utilisation.drawio.png`](architectureanddataflow/Arsitektur_BigData_Hospital_Utilisation.drawio.png)
+> * **File desain editable (Draw.io / diagrams.net):** [`architectureanddataflow/Arsitektur_BigData_Hospital_Utilisation.drawio`](architectureanddataflow/Arsitektur_BigData_Hospital_Utilisation.drawio)
+
+### Rincian 6 Tahapan Arsitektur:
+
+1. **1. Sumber Data (Heterogeneous Sources)**
+   * **`admissions_full.csv` (CSV tabular):** Mencatat 30.000+ data admisi pasien rawat inap beserta departemen dan diagnosis klinis.
+   * **`bed_capacity.json` (JSON Lines nested):** Mencatat 45.000+ log audit penggunaan tempat tidur, spesifikasi alkes (*ventilator*), dan status keterisian.
+   * **`wards.csv` (CSV referensi):** Master data kapasitas resmi 6 bangsal (total 240 tempat tidur) dan batas target BOR (75%–85%).
+
+2. **2. Ingestion (Micro-batch Simulator)**
+   * Mensimulasikan pola kedatangan data berkala (*periodic batch arrivals* per bulan/shift) menggunakan PySpark.
+   * Menghitung metrik *Velocity*: latensi pencatatan (*latency* dalam detik) dan kecepatan proses (*throughput* dalam record/detik) per batch.
+
+3. **3. Penyimpanan (Raw Parquet Lake)**
+   * Data mentah hasil ingest disimpan ke format kolumnar terkompresi **Apache Parquet** di `data/lake/` untuk menjaga keaslian skema dan efisiensi I/O.
+
+4. **4. Integrasi dan Pembersihan Data (Veracity & Normalization)**
+   * **Aturan Veracity:** Otomatisasi pembersihan anomali data (eliminasi duplikasi, pengisian discharge kosong, koreksi timestamp keluar < masuk, validasi batas umur logis, dan penanganan record yatim/orphan).
+   * **Normalisasi Skema:** Pemipihan (*flattening*) struktur hirarkis JSON dan relasional *join* dengan CSV menjadi dataset terintegrasi.
+
+5. **5. Pemrosesan Data & Benchmarking (PySpark Processing Engine)**
+   * Pemrosesan terdistribusi menggunakan PySpark DataFrame API dan Spark SQL Catalyst Optimizer untuk *multi-table shuffle joins* dan agregasi temporal.
+   * **Benchmark Performa Komputasi:** Menguji Operasi A (*Simple Aggregation*) versus Operasi B (*Relational & Temporal Analysis*) pada berbagai skala data ($x1$, $x5$, $x10$).
+
+6. **6. Analisis dan Output (Healthcare Value Delivery)**
+   * **Analitik Klinis:** Kalkulasi indikator harian **Bed Occupancy Rate (BOR %)** per bangsal dan **Length of Stay (LOS)** per spesialisasi medis.
+   * **Dashboard Eksekutif:** Visualisasi grafik ringkasan kapasitas operasional rumah sakit (PNG) beserta rekomendasi manajemen tempat tidur.
+   * **Log & Audit:** Pencatatan log benchmark performa query (CSV/JSON) dan laporan arsitektur sistem.
 
 ---
 
 ## 📂 Repository Structure
-Belum fixed
+
 ```text
+BigData-Hospital-Resource-Utilisation/
+├── architectureanddataflow/                           # Diagram arsitektur sistem & alur data pipeline
+│   ├── Arsitektur_BigData_Hospital_Utilisation.drawio      # File sumber editable (Draw.io / diagrams.net)
+│   └── Arsitektur_BigData_Hospital_Utilisation.drawio.png  # Gambar resolusi tinggi diagram arsitektur
 ├── data/
-│   ├── raw/                  # Sumber data mentah heterogen (CSV & JSON)
-├── results/                  # Metrik evaluasi, performa query, & grafik analitik
-├── 01_generate_data.py       # Generator data sintetis berskala besar & injektor anomali
-├── requirements.txt          # Spesifikasi dependensi pustaka Python
-└── README.md                 # Dokumentasi proyek
+│   ├── raw/                                           # Sumber data mentah heterogen (CSV & JSON)
+│   │   ├── admissions_full.csv                        # Data admisi pasien (CSV tabular, 30.000+ baris)
+│   │   ├── bed_capacity.json                          # Log audit pemanfaatan bed (Nested JSON, 45.000+ baris)
+│   │   ├── wards.csv                                  # Master referensi kapasitas 6 bangsal (CSV)
+│   │   └── DATA_DICTIONARY.md                         # Kamus data lengkap & dokumentasi struktur
+│   ├── incoming/                                      # Folder staging simulasi kedatangan batch (Velocity)
+│   ├── lake/                                          # Parquet Data Lake mentah hasil ingestion
+│   └── clean/                                         # Dataset bersih & terintegrasi (Parquet)
+├── results/                                           # Output analitik, log benchmark, & dashboard visual
+│   └── 01_profile.json                                # Profil dataset & ringkasan anomali kualitas data
+├── config.py                                          # Konfigurasi path, skema PySpark, & utilitas bersama
+├── 01_generate_data.py                                # Skrip generator dataset sintetis & injektor anomali
+├── requirements.txt                                   # Spesifikasi pustaka Python yang dibutuhkan
+├── IFB-451 BIG DATA-Midterm Assignment-DrEdiNuryatno__2026 (1).pdf # Panduan penugasan resmi ETS IFB-451
+└── README.md                                          # Dokumentasi teknis proyek
 ```
 
 ---
 
 ## 👥 Engineering & Analytics Team
 
-| Role | Responsibility Focus | 5Vs Domain |
-|:---|:---|:---:|
-| **Project Lead / Solution Analyst** | Problem framing, domain requirements, & dataset architecture | All 5Vs |
-| **System Engineer** | Data ingestion flow, lake storage, & velocity tracking | Volume & Velocity |
-| **Data Engineer** | Schema transformation, multi-format integration, & data veracity | Variety & Veracity |
-| **Big Data Developer** | Distributed processing, query plans, & execution benchmarks | Volume & Velocity |
-| **Data Analyst** | SQL query execution, dashboard visualization, & domain insights | Veracity & Value |
+Pembagian peran tim disusun sesuai rubrik penugasan video 5 menit penugasan ETS IFB-451:
+
+| Role | Responsibility Focus | 5Vs Domain | Alur Arsitektur & Modul |
+|:---|:---|:---:|:---:|
+| **Project Lead / Solution Analyst** | Problem framing, domain requirements, dataset architecture & 5Vs overview | All 5Vs | Tahap 1 (Sumber Data) &bull; Modul M1 |
+| **System Engineer** | Periodic micro-batch simulator, lake storage, & velocity tracking | Volume & Velocity | Tahap 2 & 3 (Ingestion & Lake) &bull; Modul M2 |
+| **Data Engineer** | Schema transformation, multi-format integration, & veracity cleansing | Variety & Veracity | Tahap 3 & 4 (Cleaning & Integrasi) &bull; Modul M3–M4 |
+| **Big Data Developer** | Distributed processing, shuffle join evaluation, & computational benchmarking | Volume & Velocity | Tahap 5 (Pemrosesan PySpark) &bull; Modul M5–M6 |
+| **Data Analyst** | Spark SQL analytics, BOR & LOS calculations, dashboard visualization, & healthcare insights | Veracity & Value | Tahap 6 (Analisis & Output) &bull; Modul M7 |
 
 ---
 
@@ -138,10 +158,17 @@ Belum fixed
 
 ### 1. Prerequisites
 * **Python**: 3.10 atau versi di atasnya
-* **Java**: JRE / JDK 8, 11, 17, atau 21 (diperlukan oleh Apache Spark runtime)
+* **Java**: JRE / JDK 8, 11, 17, atau 21 (diperlukan oleh runtime Apache Spark)
 
 ### 2. Dependency Setup
 Pasang dependensi Python yang dibutuhkan:
 ```bash
 pip install -r requirements.txt
 ```
+
+### 3. Generate Raw Datasets & Anomaly Profile
+Jalankan modul pembuatan dataset sintetis berskala besar:
+```bash
+python 01_generate_data.py
+```
+Skrip ini akan membuat data mentah heterogen di folder `data/raw/` dan ringkasan profil di `results/01_profile.json`.

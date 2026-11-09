@@ -1,0 +1,17 @@
+# Lingkungan Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Artefak Spark & Temp
+spark-warehouse/
+metastore_db/
+derby.log
+*.crc
+
+# Editor dan OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

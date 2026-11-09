@@ -1,0 +1,100 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="arch" name="Arsitektur Sistem">
+    <mxGraphModel dx="2083" dy="868" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1450" pageHeight="620" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;" value="&lt;b&gt;Pipeline Analitik Sumber Daya Rumah Sakit dan Keterisian Tempat Tidur&lt;/b&gt;&lt;br&gt;Arsitektur Sistem dan Alur Data (PySpark + Parquet)" vertex="1">
+          <mxGeometry height="50" width="900" x="260" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="h1" parent="1" style="rounded=1;fillColor=#1f3a5f;fontColor=#ffffff;fontStyle=1;strokeColor=none;html=1;whiteSpace=wrap;" value="1. SUMBER DATA" vertex="1">
+          <mxGeometry height="40" width="190" x="40" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="h2" parent="1" style="rounded=1;fillColor=#e8730c;fontColor=#ffffff;fontStyle=1;strokeColor=none;html=1;whiteSpace=wrap;" value="2. INGESTION" vertex="1">
+          <mxGeometry height="40" width="190" x="270" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="h3" parent="1" style="rounded=1;fillColor=#1f3a5f;fontColor=#ffffff;fontStyle=1;strokeColor=none;html=1;whiteSpace=wrap;" value="3. PENYIMPANAN" vertex="1">
+          <mxGeometry height="40" width="190" x="500" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="h4" parent="1" style="rounded=1;fillColor=#6a3fa0;fontColor=#ffffff;fontStyle=1;strokeColor=none;html=1;whiteSpace=wrap;" value="4. INTEGRASI DAN PEMBERSIHAN" vertex="1">
+          <mxGeometry height="40" width="190" x="730" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="h5" parent="1" style="rounded=1;fillColor=#1f3a5f;fontColor=#ffffff;fontStyle=1;strokeColor=none;html=1;whiteSpace=wrap;" value="5. PEMROSESAN" vertex="1">
+          <mxGeometry height="40" width="190" x="960" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="h6" parent="1" style="rounded=1;fillColor=#2e8b57;fontColor=#ffffff;fontStyle=1;strokeColor=none;html=1;whiteSpace=wrap;" value="6. ANALISIS DAN OUTPUT" vertex="1">
+          <mxGeometry height="40" width="190" x="1190" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" parent="1" style="rounded=1;fillColor=#dae8fc;strokeColor=#1f3a5f;whiteSpace=wrap;html=1;" value="&lt;b&gt;admissions_full.csv&lt;/b&gt;&lt;br&gt;CSV tabular&lt;br&gt;30.000+ data admisi pasien" vertex="1">
+          <mxGeometry height="80" width="190" x="40" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" parent="1" style="rounded=1;fillColor=#dae8fc;strokeColor=#1f3a5f;whiteSpace=wrap;html=1;" value="&lt;b&gt;bed_capacity.json&lt;/b&gt;&lt;br&gt;JSON Lines bersarang (nested)&lt;br&gt;45.000+ log penggunaan bed" vertex="1">
+          <mxGeometry height="80" width="190" x="40" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="1" style="rounded=1;fillColor=#dae8fc;strokeColor=#1f3a5f;whiteSpace=wrap;html=1;" value="&lt;b&gt;wards.csv&lt;/b&gt;&lt;br&gt;CSV referensi&lt;br&gt;6 bangsal, 240 tempat tidur" vertex="1">
+          <mxGeometry height="80" width="190" x="40" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="i1" parent="1" style="rounded=1;fillColor=#ffe6cc;strokeColor=#e8730c;whiteSpace=wrap;html=1;" value="&lt;b&gt;Simulator Micro-batch&lt;/b&gt;&lt;br&gt;PySpark, batch berkala&lt;br&gt;(per bulan / shift)&lt;br&gt;+ timestamp ingest&lt;br&gt;&lt;i&gt;Kedatangan data DISIMULASIKAN&lt;/i&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Metrik Ingestion&lt;/b&gt;&lt;br&gt;• latensi (detik) per batch&lt;br&gt;• throughput (record/detik)" vertex="1">
+          <mxGeometry height="280" width="190" x="270" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="st1" parent="1" style="rounded=1;fillColor=#dae8fc;strokeColor=#1f3a5f;whiteSpace=wrap;html=1;" value="&lt;b&gt;Parquet Data Lake&lt;/b&gt;&lt;br&gt;data/lake/&lt;br&gt;format kolumnar,&lt;br&gt;terkompresi,&lt;br&gt;skema terjaga" vertex="1">
+          <mxGeometry height="280" width="190" x="500" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" parent="1" style="rounded=1;fillColor=#e1d5e7;strokeColor=#6a3fa0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Aturan Veracity&lt;/b&gt;&lt;br&gt;hapus duplikat, discharge kosong,&lt;br&gt;waktu tidak konsisten,&lt;br&gt;cek rentang umur,&lt;br&gt;record yatim (orphan)" vertex="1">
+          <mxGeometry height="130" width="190" x="730" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" parent="1" style="rounded=1;fillColor=#e1d5e7;strokeColor=#6a3fa0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Normalisasi Skema&lt;/b&gt;&lt;br&gt;flatten JSON + join CSV&lt;br&gt;(dataset terintegrasi)" vertex="1">
+          <mxGeometry height="130" width="190" x="730" y="325" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" parent="1" style="rounded=1;fillColor=#fff2cc;strokeColor=#1f3a5f;whiteSpace=wrap;html=1;" value="&lt;b&gt;Mesin PySpark&lt;/b&gt;&lt;br&gt;DataFrame API + Spark SQL&lt;br&gt;shuffle join multi-tabel,&lt;br&gt;agregasi temporal&lt;br&gt;&lt;br&gt;&lt;b&gt;Benchmark Performa&lt;/b&gt;&lt;br&gt;agregasi sederhana vs&lt;br&gt;join relasional,&lt;br&gt;skala x1 / x5 / x10" vertex="1">
+          <mxGeometry height="280" width="190" x="960" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="o1" parent="1" style="rounded=1;fillColor=#d5e8d4;strokeColor=#2e8b57;whiteSpace=wrap;html=1;" value="&lt;b&gt;Analitik&lt;/b&gt;&lt;br&gt;BOR % per bangsal,&lt;br&gt;LOS per spesialisasi" vertex="1">
+          <mxGeometry height="80" width="190" x="1190" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="o2" parent="1" style="rounded=1;fillColor=#d5e8d4;strokeColor=#2e8b57;whiteSpace=wrap;html=1;" value="&lt;b&gt;Dashboard Eksekutif&lt;/b&gt;&lt;br&gt;(PNG) + rekomendasi kapasitas" vertex="1">
+          <mxGeometry height="80" width="190" x="1190" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="o3" parent="1" style="rounded=1;fillColor=#d5e8d4;strokeColor=#2e8b57;whiteSpace=wrap;html=1;" value="&lt;b&gt;Log Benchmark dan Laporan Audit&lt;/b&gt;&lt;br&gt;(CSV / JSON)" vertex="1">
+          <mxGeometry height="80" width="190" x="1190" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="vol" parent="1" style="rounded=1;fillColor=#dae8fc;strokeColor=#1f3a5f;whiteSpace=wrap;html=1;align=left;spacingLeft=8;" value="&lt;b&gt;VOLUME&lt;/b&gt;: 30.000+ admisi terhubung ke 45.000+ log bed di 6 bangsal; join relasional dan agregasi temporal menentukan beban komputasi (ukuran data vs kompleksitas struktur)." vertex="1">
+          <mxGeometry height="70" width="650" x="40" y="495" as="geometry" />
+        </mxCell>
+        <mxCell id="vel" parent="1" style="rounded=1;fillColor=#ffe6cc;strokeColor=#e8730c;whiteSpace=wrap;html=1;align=left;spacingLeft=8;" value="&lt;b&gt;VELOCITY&lt;/b&gt;: kedatangan data berkala (simulasi micro-batch); latensi ingestion dan throughput (record/detik) diukur per batch." vertex="1">
+          <mxGeometry height="70" width="650" x="730" y="495" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="s1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.143;" target="i1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="s2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="i1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="s3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.857;" target="i1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="i1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="st1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="st1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;strokeWidth=2;exitX=1;exitY=0.232;entryX=0;entryY=0.5;" target="c1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="c1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;strokeWidth=2;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="c2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="c2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.768;" target="p1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="p1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;strokeWidth=2;exitX=1;exitY=0.143;entryX=0;entryY=0.5;" target="o1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="p1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="o2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="p1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;strokeWidth=2;exitX=1;exitY=0.857;entryX=0;entryY=0.5;" target="o3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
