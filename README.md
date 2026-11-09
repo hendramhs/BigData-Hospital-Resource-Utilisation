@@ -46,7 +46,7 @@ Sistem ini dirancang dengan menerapkan prinsip **5Vs of Big Data**:
 
 ### 1. Volume (Scale & Computational Complexity)
 * Pemrosesan lebih dari **30.000 data admisi pasien** yang berelasi dengan **45.000+ log audit tempat tidur** di 6 bangsal rumah sakit (total kapasitas 240 tempat tidur terpasang).
-* Evaluasi komputasi relasional kompleks (*multi-table shuffle joins* dan agregasi temporal) dibandingkan dengan agregasi sederhana pada berbagai skala data ($x1$, $x5$, $x10$).
+* Evaluasi komputasi relasional kompleks (*multi-table shuffle joins* dan agregasi temporal) dibandingkan dengan agregasi sederhana pada skala data asli (30.000+ admisi & 45.000+ log bed).
 
 ### 2. Velocity (Data Arrival & Ingestion Timeliness)
 * Simulasi aliran data berkala (*periodic batch ingestion*) per periode bulan/shift.
@@ -104,7 +104,7 @@ Berikut adalah arsitektur sistem end-to-end yang mengintegrasikan seluruh alur d
 
 5. **5. Pemrosesan Data & Benchmarking (PySpark Processing Engine)**
    * Pemrosesan terdistribusi menggunakan PySpark DataFrame API dan Spark SQL Catalyst Optimizer untuk *multi-table shuffle joins* dan agregasi temporal.
-   * **Benchmark Performa Komputasi:** Menguji Operasi A (*Simple Aggregation*) versus Operasi B (*Relational & Temporal Analysis*) pada berbagai skala data ($x1$, $x5$, $x10$).
+   * **Benchmark Performa Komputasi:** Menguji Operasi A (*Simple Aggregation*) versus Operasi B (*Relational & Temporal Analysis*) pada skala data asli (30k+ admisi).
 
 6. **6. Analisis dan Output (Healthcare Value Delivery)**
    * **Analitik Klinis:** Kalkulasi indikator harian **Bed Occupancy Rate (BOR %)** per bangsal dan **Length of Stay (LOS)** per spesialisasi medis.
