@@ -1,0 +1,7 @@
+masalah,sebelum,sesudah,penanganan
+Baris admisi duplikat,900,0,dropDuplicates(admission_id)
+Discharge kosong,920,0,"1,191 admisi ber-discharge NULL di clean (kosong + invalid) diimputasi admit + 5 hari saat analisis (metode 04)"
+Discharge < admit,299,0,di-NULL-kan (lalu diimputasi)
+Umur tidak valid (<0 / >120),155,0,di-NULL-kan
+Tarif harian negatif,218,0,di-NULL-kan
+Log bed yatim (orphan),135,0,left_semi join dengan admisi valid (dibuang)

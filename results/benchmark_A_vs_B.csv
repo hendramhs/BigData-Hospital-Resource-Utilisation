@@ -1,3 +1,3 @@
 operation,avg_sec,min_sec,max_sec,shuffle_exchanges,rows_in,rows_out,intermediate_rows,slowdown_vs_A
-A: simple aggregation,0.2037,0.1656,0.2622,1,30000,6,30000,1.0
-B: relational+temporal,1.3201,1.2687,1.3547,6,30000,2245,190564,6.48
+A: simple aggregation,0.1315,0.1222,0.1372,1,30000,6,30000,1.0
+B: relational+temporal,1.1289,1.0062,1.3487,6,30000,2241,190540,8.58

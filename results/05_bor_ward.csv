@@ -1,0 +1,7 @@
+ward_name,total_beds,target_bor_pct,avg_occupied,peak_occupied,demand_bor_pct,demand_bor_excl_warmup_pct,bor_excl_imputed_pct,served_bor_pct,unmet_demand_pct,pct_days_over_capacity,pct_days_over_target,bor_patient_days_pct,beds_needed_at_target,bed_gap,capacity_multiple_needed
+Intensive Care Unit,25,80.0,74.2,111,296.7,298.0,289.7,99.8,66.4,99.5,99.7,262.8,93,68,3.7
+Internal Medicine Ward,65,85.0,160.8,239,247.4,248.5,240.6,99.8,59.7,99.5,99.5,217.4,190,125,2.9
+Cardiology Ward,35,80.0,69.7,103,199.2,200.2,192.0,99.6,50.0,98.9,99.2,170.5,88,53,2.5
+Emergency Ward,30,75.0,56.1,92,186.9,187.0,171.9,99.9,46.5,99.7,99.7,127.3,75,45,2.5
+Surgery Ward,45,85.0,84.0,122,186.7,187.3,179.8,99.7,46.6,99.5,99.5,158.0,99,54,2.2
+Pediatrics Ward,40,80.0,70.6,111,176.6,176.1,168.7,99.8,43.5,98.6,99.7,145.1,89,49,2.2

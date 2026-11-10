@@ -1,0 +1,73 @@
+ward_name,month,demand_bor_pct,served_bor_pct,unmet_demand_pct
+Cardiology Ward,1,217.0,95.0,56.2
+Cardiology Ward,2,233.7,100.0,57.2
+Cardiology Ward,3,248.0,100.0,59.7
+Cardiology Ward,4,165.3,100.0,39.5
+Cardiology Ward,5,157.9,100.0,36.7
+Cardiology Ward,6,168.9,100.0,40.8
+Cardiology Ward,7,182.9,100.0,45.3
+Cardiology Ward,8,157.1,100.0,36.3
+Cardiology Ward,9,181.4,100.0,44.9
+Cardiology Ward,10,223.3,100.0,55.2
+Cardiology Ward,11,215.0,100.0,53.5
+Cardiology Ward,12,241.1,100.0,58.5
+Emergency Ward,1,201.7,98.7,51.1
+Emergency Ward,2,217.0,100.0,53.9
+Emergency Ward,3,218.4,100.0,54.2
+Emergency Ward,4,168.2,100.0,40.6
+Emergency Ward,5,154.6,100.0,35.3
+Emergency Ward,6,167.0,100.0,40.1
+Emergency Ward,7,153.2,100.0,34.7
+Emergency Ward,8,163.7,100.0,38.9
+Emergency Ward,9,154.4,100.0,35.3
+Emergency Ward,10,209.7,100.0,52.3
+Emergency Ward,11,209.2,100.0,52.2
+Emergency Ward,12,226.5,100.0,55.8
+Intensive Care Unit,1,309.2,97.3,68.5
+Intensive Care Unit,2,344.3,100.0,71.0
+Intensive Care Unit,3,356.4,100.0,71.9
+Intensive Care Unit,4,274.0,100.0,63.5
+Intensive Care Unit,5,244.5,100.0,59.1
+Intensive Care Unit,6,254.0,100.0,60.6
+Intensive Care Unit,7,249.9,100.0,60.0
+Intensive Care Unit,8,236.1,100.0,57.7
+Intensive Care Unit,9,255.1,100.0,60.8
+Intensive Care Unit,10,332.4,100.0,69.9
+Intensive Care Unit,11,344.3,100.0,71.0
+Intensive Care Unit,12,363.5,100.0,72.5
+Internal Medicine Ward,1,269.6,97.4,63.9
+Internal Medicine Ward,2,324.2,100.0,69.2
+Internal Medicine Ward,3,322.6,100.0,69.0
+Internal Medicine Ward,4,216.5,100.0,53.8
+Internal Medicine Ward,5,177.4,100.0,43.6
+Internal Medicine Ward,6,179.8,100.0,44.4
+Internal Medicine Ward,7,194.9,100.0,48.7
+Internal Medicine Ward,8,201.9,100.0,50.5
+Internal Medicine Ward,9,189.0,100.0,47.1
+Internal Medicine Ward,10,288.1,100.0,65.3
+Internal Medicine Ward,11,300.1,100.0,66.7
+Internal Medicine Ward,12,308.6,100.0,67.6
+Pediatrics Ward,1,198.5,98.1,50.5
+Pediatrics Ward,2,215.3,100.0,53.5
+Pediatrics Ward,3,211.8,100.0,52.8
+Pediatrics Ward,4,150.3,100.0,33.4
+Pediatrics Ward,5,129.0,100.0,22.5
+Pediatrics Ward,6,138.4,100.0,27.8
+Pediatrics Ward,7,149.1,100.0,32.9
+Pediatrics Ward,8,124.7,99.9,19.9
+Pediatrics Ward,9,135.3,100.0,26.1
+Pediatrics Ward,10,219.2,100.0,54.4
+Pediatrics Ward,11,239.8,100.0,58.3
+Pediatrics Ward,12,210.0,100.0,52.4
+Surgery Ward,1,199.1,96.7,51.4
+Surgery Ward,2,233.1,100.0,57.1
+Surgery Ward,3,226.2,100.0,55.8
+Surgery Ward,4,157.4,100.0,36.5
+Surgery Ward,5,161.4,100.0,38.0
+Surgery Ward,6,149.0,100.0,32.9
+Surgery Ward,7,154.6,100.0,35.3
+Surgery Ward,8,158.6,100.0,36.9
+Surgery Ward,9,161.9,100.0,38.2
+Surgery Ward,10,218.9,100.0,54.3
+Surgery Ward,11,207.6,100.0,51.8
+Surgery Ward,12,215.2,100.0,53.5

@@ -1,0 +1,7 @@
+ward_name,target_bor_pct,Dry,Rainy,beds_needed_rainy,beds_needed_dry,surge_beds_rainy,adm_per_month_rainy,adm_per_month_dry,admission_uplift_pct,alos_dry,alos_rainy,alos_uplift_pct,unmet_pct_dry,unmet_pct_rainy
+Cardiology Ward,80.0,59.1,80.4,101,74,27,359.0,258.0,39.1,5.99,5.98,-0.2,40.8,56.8
+Emergency Ward,75.0,48.0,64.1,86,64,22,633.0,463.0,36.7,2.02,2.0,-1.0,37.6,53.3
+Intensive Care Unit,80.0,63.0,85.4,107,79,28,298.0,216.0,38.0,7.86,8.08,2.8,60.3,70.9
+Internal Medicine Ward,85.0,125.6,196.2,231,148,83,689.0,509.0,35.4,6.44,8.12,26.1,48.2,67.0
+Pediatrics Ward,80.0,55.1,86.2,108,69,39,451.0,329.0,37.1,4.01,4.96,23.7,27.4,53.8
+Surgery Ward,85.0,70.7,97.4,115,84,31,461.0,334.0,38.0,5.49,5.52,0.5,36.4,54.1

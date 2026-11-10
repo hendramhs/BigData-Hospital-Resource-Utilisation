@@ -1,0 +1,313 @@
+{
+  "method": "ikut 04_processing.py (imputasi median LOS, sensus harian inklusif)",
+  "median_los_days": 5,
+  "admissions_clean": 30000,
+  "imputed_discharge": 1191,
+  "timings_sec": {
+    "Q1_Q4_BOR_ward": 1.19,
+    "Q1_patient_days_BOR": 0.47,
+    "Q2_monthly_BOR": 0.61,
+    "Q2_season_occupancy": 0.35,
+    "Q2_admissions_season": 0.52,
+    "Q2_alos_season": 0.45,
+    "Q2_season_unmet": 0.28,
+    "Q2_alos_ward": 0.56,
+    "Q5_integrated_bed_status": 0.98
+  },
+  "bor": [
+    {
+      "ward_name": "Intensive Care Unit",
+      "total_beds": 25,
+      "target_bor_pct": 80.0,
+      "avg_occupied": 74.2,
+      "peak_occupied": 111,
+      "demand_bor_pct": 296.7,
+      "demand_bor_excl_warmup_pct": 298.0,
+      "bor_excl_imputed_pct": 289.7,
+      "served_bor_pct": 99.8,
+      "unmet_demand_pct": 66.4,
+      "pct_days_over_capacity": 99.5,
+      "pct_days_over_target": 99.7,
+      "bor_patient_days_pct": 262.8,
+      "beds_needed_at_target": 93,
+      "bed_gap": 68,
+      "capacity_multiple_needed": 3.7
+    },
+    {
+      "ward_name": "Internal Medicine Ward",
+      "total_beds": 65,
+      "target_bor_pct": 85.0,
+      "avg_occupied": 160.8,
+      "peak_occupied": 239,
+      "demand_bor_pct": 247.4,
+      "demand_bor_excl_warmup_pct": 248.5,
+      "bor_excl_imputed_pct": 240.6,
+      "served_bor_pct": 99.8,
+      "unmet_demand_pct": 59.7,
+      "pct_days_over_capacity": 99.5,
+      "pct_days_over_target": 99.5,
+      "bor_patient_days_pct": 217.4,
+      "beds_needed_at_target": 190,
+      "bed_gap": 125,
+      "capacity_multiple_needed": 2.9
+    },
+    {
+      "ward_name": "Cardiology Ward",
+      "total_beds": 35,
+      "target_bor_pct": 80.0,
+      "avg_occupied": 69.7,
+      "peak_occupied": 103,
+      "demand_bor_pct": 199.2,
+      "demand_bor_excl_warmup_pct": 200.2,
+      "bor_excl_imputed_pct": 192.0,
+      "served_bor_pct": 99.6,
+      "unmet_demand_pct": 50.0,
+      "pct_days_over_capacity": 98.9,
+      "pct_days_over_target": 99.2,
+      "bor_patient_days_pct": 170.5,
+      "beds_needed_at_target": 88,
+      "bed_gap": 53,
+      "capacity_multiple_needed": 2.5
+    },
+    {
+      "ward_name": "Emergency Ward",
+      "total_beds": 30,
+      "target_bor_pct": 75.0,
+      "avg_occupied": 56.1,
+      "peak_occupied": 92,
+      "demand_bor_pct": 186.9,
+      "demand_bor_excl_warmup_pct": 187.0,
+      "bor_excl_imputed_pct": 171.9,
+      "served_bor_pct": 99.9,
+      "unmet_demand_pct": 46.5,
+      "pct_days_over_capacity": 99.7,
+      "pct_days_over_target": 99.7,
+      "bor_patient_days_pct": 127.3,
+      "beds_needed_at_target": 75,
+      "bed_gap": 45,
+      "capacity_multiple_needed": 2.5
+    },
+    {
+      "ward_name": "Surgery Ward",
+      "total_beds": 45,
+      "target_bor_pct": 85.0,
+      "avg_occupied": 84.0,
+      "peak_occupied": 122,
+      "demand_bor_pct": 186.7,
+      "demand_bor_excl_warmup_pct": 187.3,
+      "bor_excl_imputed_pct": 179.8,
+      "served_bor_pct": 99.7,
+      "unmet_demand_pct": 46.6,
+      "pct_days_over_capacity": 99.5,
+      "pct_days_over_target": 99.5,
+      "bor_patient_days_pct": 158.0,
+      "beds_needed_at_target": 99,
+      "bed_gap": 54,
+      "capacity_multiple_needed": 2.2
+    },
+    {
+      "ward_name": "Pediatrics Ward",
+      "total_beds": 40,
+      "target_bor_pct": 80.0,
+      "avg_occupied": 70.6,
+      "peak_occupied": 111,
+      "demand_bor_pct": 176.6,
+      "demand_bor_excl_warmup_pct": 176.1,
+      "bor_excl_imputed_pct": 168.7,
+      "served_bor_pct": 99.8,
+      "unmet_demand_pct": 43.5,
+      "pct_days_over_capacity": 98.6,
+      "pct_days_over_target": 99.7,
+      "bor_patient_days_pct": 145.1,
+      "beds_needed_at_target": 89,
+      "bed_gap": 49,
+      "capacity_multiple_needed": 2.2
+    }
+  ],
+  "season": [
+    {
+      "ward_name": "Cardiology Ward",
+      "target_bor_pct": 80.0,
+      "Dry": 59.1,
+      "Rainy": 80.4,
+      "beds_needed_rainy": 101,
+      "beds_needed_dry": 74,
+      "surge_beds_rainy": 27,
+      "adm_per_month_rainy": 359.0,
+      "adm_per_month_dry": 258.0,
+      "admission_uplift_pct": 39.1,
+      "alos_dry": 5.99,
+      "alos_rainy": 5.98,
+      "alos_uplift_pct": -0.2,
+      "unmet_pct_dry": 40.8,
+      "unmet_pct_rainy": 56.8
+    },
+    {
+      "ward_name": "Emergency Ward",
+      "target_bor_pct": 75.0,
+      "Dry": 48.0,
+      "Rainy": 64.1,
+      "beds_needed_rainy": 86,
+      "beds_needed_dry": 64,
+      "surge_beds_rainy": 22,
+      "adm_per_month_rainy": 633.0,
+      "adm_per_month_dry": 463.0,
+      "admission_uplift_pct": 36.7,
+      "alos_dry": 2.02,
+      "alos_rainy": 2.0,
+      "alos_uplift_pct": -1.0,
+      "unmet_pct_dry": 37.6,
+      "unmet_pct_rainy": 53.3
+    },
+    {
+      "ward_name": "Intensive Care Unit",
+      "target_bor_pct": 80.0,
+      "Dry": 63.0,
+      "Rainy": 85.4,
+      "beds_needed_rainy": 107,
+      "beds_needed_dry": 79,
+      "surge_beds_rainy": 28,
+      "adm_per_month_rainy": 298.0,
+      "adm_per_month_dry": 216.0,
+      "admission_uplift_pct": 38.0,
+      "alos_dry": 7.86,
+      "alos_rainy": 8.08,
+      "alos_uplift_pct": 2.8,
+      "unmet_pct_dry": 60.3,
+      "unmet_pct_rainy": 70.9
+    },
+    {
+      "ward_name": "Internal Medicine Ward",
+      "target_bor_pct": 85.0,
+      "Dry": 125.6,
+      "Rainy": 196.2,
+      "beds_needed_rainy": 231,
+      "beds_needed_dry": 148,
+      "surge_beds_rainy": 83,
+      "adm_per_month_rainy": 689.0,
+      "adm_per_month_dry": 509.0,
+      "admission_uplift_pct": 35.4,
+      "alos_dry": 6.44,
+      "alos_rainy": 8.12,
+      "alos_uplift_pct": 26.1,
+      "unmet_pct_dry": 48.2,
+      "unmet_pct_rainy": 67.0
+    },
+    {
+      "ward_name": "Pediatrics Ward",
+      "target_bor_pct": 80.0,
+      "Dry": 55.1,
+      "Rainy": 86.2,
+      "beds_needed_rainy": 108,
+      "beds_needed_dry": 69,
+      "surge_beds_rainy": 39,
+      "adm_per_month_rainy": 451.0,
+      "adm_per_month_dry": 329.0,
+      "admission_uplift_pct": 37.1,
+      "alos_dry": 4.01,
+      "alos_rainy": 4.96,
+      "alos_uplift_pct": 23.7,
+      "unmet_pct_dry": 27.4,
+      "unmet_pct_rainy": 53.8
+    },
+    {
+      "ward_name": "Surgery Ward",
+      "target_bor_pct": 85.0,
+      "Dry": 70.7,
+      "Rainy": 97.4,
+      "beds_needed_rainy": 115,
+      "beds_needed_dry": 84,
+      "surge_beds_rainy": 31,
+      "adm_per_month_rainy": 461.0,
+      "adm_per_month_dry": 334.0,
+      "admission_uplift_pct": 38.0,
+      "alos_dry": 5.49,
+      "alos_rainy": 5.52,
+      "alos_uplift_pct": 0.5,
+      "unmet_pct_dry": 36.4,
+      "unmet_pct_rainy": 54.1
+    }
+  ],
+  "veracity": [
+    {
+      "masalah": "Baris admisi duplikat",
+      "sebelum": 900,
+      "sesudah": 0,
+      "penanganan": "dropDuplicates(admission_id)"
+    },
+    {
+      "masalah": "Discharge kosong",
+      "sebelum": 920,
+      "sesudah": 0,
+      "penanganan": "1,191 admisi ber-discharge NULL di clean (kosong + invalid) diimputasi admit + 5 hari saat analisis (metode 04)"
+    },
+    {
+      "masalah": "Discharge < admit",
+      "sebelum": 299,
+      "sesudah": 0,
+      "penanganan": "di-NULL-kan (lalu diimputasi)"
+    },
+    {
+      "masalah": "Umur tidak valid (<0 / >120)",
+      "sebelum": 155,
+      "sesudah": 0,
+      "penanganan": "di-NULL-kan"
+    },
+    {
+      "masalah": "Tarif harian negatif",
+      "sebelum": 218,
+      "sesudah": 0,
+      "penanganan": "di-NULL-kan"
+    },
+    {
+      "masalah": "Log bed yatim (orphan)",
+      "sebelum": 135,
+      "sesudah": 0,
+      "penanganan": "left_semi join dengan admisi valid (dibuang)"
+    }
+  ],
+  "imputation_sensitivity": [
+    {
+      "ward_name": "Intensive Care Unit",
+      "demand_bor_pct": 296.7,
+      "bor_excl_imputed_pct": 289.7,
+      "selisih_pts": 7.0,
+      "selisih_pct": 2.4
+    },
+    {
+      "ward_name": "Internal Medicine Ward",
+      "demand_bor_pct": 247.4,
+      "bor_excl_imputed_pct": 240.6,
+      "selisih_pts": 6.8,
+      "selisih_pct": 2.7
+    },
+    {
+      "ward_name": "Cardiology Ward",
+      "demand_bor_pct": 199.2,
+      "bor_excl_imputed_pct": 192.0,
+      "selisih_pts": 7.2,
+      "selisih_pct": 3.6
+    },
+    {
+      "ward_name": "Emergency Ward",
+      "demand_bor_pct": 186.9,
+      "bor_excl_imputed_pct": 171.9,
+      "selisih_pts": 15.0,
+      "selisih_pct": 8.0
+    },
+    {
+      "ward_name": "Surgery Ward",
+      "demand_bor_pct": 186.7,
+      "bor_excl_imputed_pct": 179.8,
+      "selisih_pts": 6.9,
+      "selisih_pct": 3.7
+    },
+    {
+      "ward_name": "Pediatrics Ward",
+      "demand_bor_pct": 176.6,
+      "bor_excl_imputed_pct": 168.7,
+      "selisih_pts": 7.9,
+      "selisih_pct": 4.5
+    }
+  ]
+}
