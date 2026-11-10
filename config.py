@@ -20,7 +20,51 @@ def ensure_dirs(reset_data=False):
 
 
 def get_spark(name="HospitalResource-5Vs"):
+    import sys
+    import pyspark
     from pyspark.sql import SparkSession
+
+    os.environ.pop("TERM_PROGRAM", None)
+    spark_home = os.path.dirname(pyspark.__file__)
+    os.environ["SPARK_HOME"] = spark_home
+    os.environ["PYSPARK_PYTHON"] = sys.executable
+    os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
+
+    if os.name == "nt":
+        if os.path.isdir(r"C:\PROGRA~1\Java\jdk-21"):
+            os.environ["JAVA_HOME"] = r"C:\PROGRA~1\Java\jdk-21"
+        elif os.path.isdir(r"C:\Program Files\Java\jdk-21"):
+            os.environ["JAVA_HOME"] = r"C:\Program Files\Java\jdk-21"
+        if os.path.isdir(r"C:\hadoop"):
+            os.environ["HADOOP_HOME"] = r"C:\hadoop"
+        spark_tmp = r"C:\spark-tmp"
+        os.makedirs(spark_tmp, exist_ok=True)
+        os.environ["TEMP"] = spark_tmp
+        os.environ["TMP"] = spark_tmp
+
+        required_paths = [
+            os.path.join(spark_home, "bin"),
+            os.path.join(os.environ.get("JAVA_HOME", ""), "bin"),
+            os.path.join(os.environ.get("HADOOP_HOME", ""), "bin"),
+            r"C:\Windows\System32",
+            r"C:\Windows\System32\WindowsPowerShell\v1.0",
+        ]
+        current_path = os.environ.get("PATH", "")
+        os.environ["PATH"] = ";".join(
+            [p for p in required_paths if os.path.isdir(p)] + [current_path]
+        )
+
+        # Silence PySpark's noisy Windows taskkill atexit message after spark.stop()
+        import atexit
+        _orig_register = atexit.register
+
+        def _quiet_register(func, *args, **kwargs):
+            if getattr(func, "__name__", "") == "killChild":
+                return func
+            return _orig_register(func, *args, **kwargs)
+
+        atexit.register = _quiet_register
+
     spark = (SparkSession.builder.master("local[*]").appName(name)
              .config("spark.sql.shuffle.partitions", "8")
              .config("spark.driver.memory", "3g")

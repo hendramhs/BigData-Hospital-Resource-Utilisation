@@ -139,9 +139,32 @@ Belum fixed
 ### 1. Prerequisites
 * **Python**: 3.10 atau versi di atasnya
 * **Java**: JRE / JDK 8, 11, 17, atau 21 (diperlukan oleh Apache Spark runtime)
+* **Windows**: Spark juga memerlukan Hadoop helper (`winutils.exe`) dan
+  environment variable `HADOOP_HOME`. Untuk instalasi PySpark melalui pip,
+  tetapkan juga `SPARK_HOME` ke folder `site-packages\pyspark`. Alternatif yang lebih mudah untuk
+  demonstrasi adalah menjalankan pipeline di Google Colab/Linux.
 
 ### 2. Dependency Setup
 Pasang dependensi Python yang dibutuhkan:
 ```bash
 pip install -r requirements.txt
 ```
+
+### 3. Generate and process the dataset
+Generate the synthetic source data:
+```powershell
+python .\01_generate_data.py
+```
+
+Run the storage, integration, and quality pipeline:
+```powershell
+python .\02_storage_integration_quality.py
+```
+
+> **Note for Windows:** `config.py` (`get_spark()`) automatically configures `SPARK_HOME`, `JAVA_HOME`, `HADOOP_HOME`, `TEMP`/`TMP` (`C:\spark-tmp`), and clears `TERM_PROGRAM` so the pipeline runs directly in VS Code / PowerShell without manual environment variable setup.
+
+The second script writes the source datasets to `data/lake/` as Parquet,
+flattens the nested `bed_specs` JSON object, validates and cleans the data,
+joins admissions with bed logs and ward capacity, and writes the integrated
+dataset to `data/clean/integrated_resource_records/`. The before-and-after
+quality evidence is saved in `results/02_quality_report.json`.

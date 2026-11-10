@@ -1,0 +1,22 @@
+{
+  "before": {
+    "admission_rows": 30900,
+    "duplicate_admission_rows": 900,
+    "missing_department_rows": 621,
+    "missing_discharge_rows": 920,
+    "invalid_age_rows": 155,
+    "invalid_temporal_rows": 299,
+    "bed_rows": 44987,
+    "missing_daily_rate_rows": 1350,
+    "negative_daily_rate_rows": 218
+  },
+  "after": {
+    "clean_admission_rows": 30000,
+    "clean_unique_admissions": 30000,
+    "clean_bed_rows": 44852,
+    "orphan_bed_rows_removed": 135,
+    "invalid_temporal_values_remaining": 0,
+    "negative_daily_rate_values_remaining": 0,
+    "integrated_rows": 44852
+  }
+}
